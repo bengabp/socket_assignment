@@ -1,13 +1,14 @@
 import socket
-from config import ENCODE_DECODE_FORMAT,MESSAGE_LENGTH,PORT
+from config import (SERVER_HOST,
+                    ADDRESS,
+                    ENCODE_DECODE_FORMAT,
+                    MESSAGE_LENGTH,
+                    PORT,
+                    DISCONNECT_MESSAGE)
 
-FORMAT = 'utf-8'
-DISCONNECT_MESSAGE = "!DISCONNECT"
-SERVER = "192.168.184.25"
-ADDR = (SERVER, PORT)
 
 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-client.connect(ADDR)
+client.connect(ADDRESS)
 
 
 def send(msg):
@@ -17,7 +18,7 @@ def send(msg):
 	send_length += b' ' * (MESSAGE_LENGTH - len(send_length))
 	client.send(send_length)
 	client.send(message)
-	print(client.recv(2048).decode(ENCODE_DECODE_FORMAT))
+	print(client.recv(MESSAGE_LENGTH).decode(ENCODE_DECODE_FORMAT))
 
 
 send("Hello World!")

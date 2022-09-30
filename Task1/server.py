@@ -1,19 +1,20 @@
 import socket
 import threading
 
-from config import ENCODE_DECODE_FORMAT, PORT, MESSAGE_LENGTH
-
-SERVER = socket.gethostbyname(socket.gethostname())
-ADDR = (SERVER, PORT)
-DISCONNECT_MESSAGE = "!DISCONNECT"
+from config import (SERVER_HOST,
+                    ENCODE_DECODE_FORMAT,
+                    PORT,
+					ADDRESS,
+                    MESSAGE_LENGTH,
+                    DISCONNECT_MESSAGE)
 
 server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-server.bind(ADDR)
+server.bind(ADDRESS)
 
 
+# Define function to handle clients separately in another thread
 def handle_client(conn, addr):
-	print(f"[NEW CONNECTION] {addr} connected.")
-
+	print(f"New connection from {addr}")
 	connected = True
 	while connected:
 		msg_length = conn.recv(MESSAGE_LENGTH).decode(ENCODE_DECODE_FORMAT)
@@ -31,7 +32,7 @@ def handle_client(conn, addr):
 
 def start():
 	server.listen()
-	print(f"[LISTENING] Server is listening on {SERVER}")
+	print(f"[RUNNING] Server is listening on {SERVER_HOST}")
 	while True:
 		conn, addr = server.accept()
 		thread = threading.Thread(target=handle_client, args=(conn, addr))
