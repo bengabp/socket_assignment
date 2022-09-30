@@ -2,7 +2,7 @@ import socket
 
 MESSAGE_LENGTH = 1024
 SERVER_HOST = socket.gethostbyname(socket.gethostname())
-PORT = 5050
+PORT = 5000
 ENCODE_DECODE_FORMAT = "utf-8"
 DISCONNECT_MESSAGE = "CLOSE-CONN"
 ADDRESS = (SERVER_HOST, PORT)
